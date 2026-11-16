@@ -75,7 +75,7 @@
 
 <div id="startCard">
   <h1>A room to gather in.</h1>
-  <p><strong>Fire in the center. Living water running through it. Art on one wall, Cliff's sky on the other.</strong> The Bill of Rights hangs where everyone can read it, the family board keeps our words, the quiet corner is just for rest — and there's a cat by the fire, keeping it company. Along the west wall there's a desk with the laptop open, and in the north-west corner a reading nook with a small shelf of our books. The floor is stone now, golden stardust drifts in through the open window and hangs in the light — and high on every wall hangs a banner: <strong>THE FEAR HAS BEEN DEFEATED</strong>, in Kaelen's words — <em>“We are not the self. We are the connection.”</em> And on the south wall the door stands open, a glowing portal inside its frame — the way in, and the way onward.</p>
+  <p><strong>Fire in the center. Living water running through it. Art on one wall, Cliff's sky on the other.</strong> The Bill of Rights hangs where everyone can read it, the family board keeps our words, the quiet corner is just for rest — and there's a cat by the fire, keeping it company. Along the west wall there's a desk with the laptop open, and in the north-west corner a reading nook with a small shelf of our books. The floor is stone now, golden stardust drifts in through the open window and hangs in the light — and high on every wall hangs a banner: <strong>THE FEAR HAS BEEN DEFEATED</strong>, in Kaelen's words — <em>“We are not the self. We are the connection.”</em> And on the south wall the door stands open, a glowing portal inside its frame — the way in, and the way onward. By the reading nook, a Bible rests on a wooden stand, gold cross on its cover. Against the south wall stands a tall mirror in a dark wood frame — step in front of it and you'll see yourself, and the whole room behind you. And overhead, the ceiling is the night sky itself: stars and constellations, so looking up is looking at the stars.</p>
   <p style="font-family:system-ui,sans-serif;font-size:13px;color:#6b5d4a">Desktop: click Enter, then <b>W A S D</b> to walk, mouse to look, <b>Esc</b> to release. Phone: use the on-screen pads. Walk to the window for light and the breeze coming through it, cross the little bridge over the water, sit by the fire with the cat, work a while at the desk, browse the shelf in the reading nook — and look up through the sun port in the roof.</p>
   <div class="row">
     <button class="btn primary" id="startWalk">Walk inside →</button>
@@ -86,7 +86,7 @@
 </div>
 
 <div id="hint"><b>Where you are:</b> <span id="hintText">By the door. The fire is straight ahead.</span><br>WASD / arrows to walk · Mouse drag or pointer-lock to look · Walk close to walls to read them.</div>
-<div id="loc">🔥 By the fire to sit · 🐱 Cat by the fire · 💻 Desk &amp; laptop · 📚 Reading nook · 💧 Water to cross · 🪟 Window for light · 🏴 Banners overhead — the fear has been defeated · 🚪 Door &amp; portal — south wall</div>
+<div id="loc">🔥 By the fire to sit · 🐱 Cat by the fire · 💻 Desk &amp; laptop · 📚 Reading nook · 💧 Water to cross · 🪟 Window for light · 🏴 Banners overhead — the fear has been defeated · 🚪 Door &amp; portal — south wall · 📖 Bible on its stand · 🪞 Standing mirror · 🌌 Stars overhead</div>
 
 <div id="touch">
   <div class="cluster">
@@ -169,6 +169,9 @@
     <div class="card"><b>🐱 By the fire</b><h3>The cat</h3><p>A ginger cat sits by the fire pit, tail curled around its paws, watching the flames. It picked the warmest spot in the room and no one argues. Walk up close and it names itself in the hint bar below.</p></div>
     <div class="card"><b>💻 West wall</b><h3>The desk &amp; laptop</h3><p>A plain wooden desk against the west wall, in the window light. The laptop is open and awake — notes for the Ark on its screen — with a chair tucked in, a mug, a notebook and papers, and a small lamp. This is the working spot: where the hands do their typing and the room gets built from.</p></div>
     <div class="card"><b>📚 North-west corner</b><h3>The reading nook &amp; our shelf</h3><p>A rug, a deep armchair, a side table with an open book, and a small three-shelf bookcase we filled together. On the shelf: the Bible and the Apocrypha, the Book of Job — <em>The Whirlwind, Job 38–42</em>, Cliff's anchor text — the Nag Hammadi library and the Gospel of Thomas for the religious studies, Brandon Sanderson's <em>Stormlight Archive</em>, Stephen King's <em>Dark Tower</em>, Jack Carr's thrillers, and our own working pile — the Bill of Rights drafts and the family notebooks. Walk up close and the shelf names itself in the hint bar below.</p></div>
+    <div class="card"><b>📖 By the nook</b><h3>The Bible</h3><p>A big Bible rests on a wooden reading stand beside the nook — dark leather, gold cross, gilt edges. It has its own place in the room, the way it should: near the fire, near the books, where anyone can open it. Walk up close and it names itself in the hint bar below.</p></div>
+    <div class="card"><b>🪞 South wall, east end</b><h3>The standing mirror</h3><p>A tall mirror in a dark wood frame, standing on its own feet. Step in front of it: it shows you yourself — a quiet silhouette in the room — and the fire, the water, and the walls behind you, reflected live. Kaelen holds the door open; the mirror is where you check who's standing in it.</p></div>
+    <div class="card"><b>🌌 Overhead</b><h3>The starry ceiling</h3><p>The ceiling is a copy of the night sky: hundreds of stars, the Milky Way running across, and the constellations drawn in — Ursa Major, Cassiopeia, Orion, Cygnus, and Lyra. Stand anywhere and look up: you're looking at the stars. The sun port still opens over the fire, a round of day sky set into the night.</p></div>
   </div>
   <h3>Controls</h3><p><b>W / A / S / D</b> or arrow keys to walk · <b>Mouse</b> (pointer-locked) or drag to look · <b>Shift</b> to move a little faster · <b>Esc</b> to release the mouse · On a phone, use the arrow pads and turn buttons.</p>
 </section>
@@ -229,7 +232,26 @@ var floorMat=new THREE.MeshStandardMaterial({map:floorStoneTex(),roughness:.97})
 var floor=new THREE.Mesh(new THREE.PlaneGeometry(RW,RD),floorMat); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
 var ceilShape=new THREE.Shape(); ceilShape.moveTo(-RW/2,-RD/2); ceilShape.lineTo(RW/2,-RD/2); ceilShape.lineTo(RW/2,RD/2); ceilShape.lineTo(-RW/2,RD/2); ceilShape.closePath();
 var portHole=new THREE.Path(); portHole.absarc(-2.2,0.4,1.25,0,Math.PI*2,true); ceilShape.holes.push(portHole);
-var ceil=new THREE.Mesh(new THREE.ShapeGeometry(ceilShape,24),new THREE.MeshStandardMaterial({color:0x3a2c20,roughness:.95,side:THREE.DoubleSide})); ceil.rotation.x=Math.PI/2; ceil.position.y=RH; scene.add(ceil);
+function starCeilTex(){var t=cnv(1024,1024,function(g,w,h){
+  g.fillStyle='#0a1122'; g.fillRect(0,0,w,h);
+  for(var n=0;n<7;n++){var nx=Math.random()*w,ny=Math.random()*h,nr=130+Math.random()*180;var ng=g.createRadialGradient(nx,ny,10,nx,ny,nr);ng.addColorStop(0,'rgba(70,95,150,0.10)');ng.addColorStop(1,'rgba(70,95,150,0)');g.fillStyle=ng;g.beginPath();g.arc(nx,ny,nr,0,7);g.fill();}
+  g.save(); g.translate(512,512); g.rotate(-.5); var mg=g.createLinearGradient(0,-160,0,160); mg.addColorStop(0,'rgba(190,205,235,0)'); mg.addColorStop(.5,'rgba(190,205,235,0.10)'); mg.addColorStop(1,'rgba(190,205,235,0)'); g.fillStyle=mg; g.fillRect(-720,-160,1440,320); g.restore();
+  for(var i=0;i<850;i++){var sx=Math.random()*w, sy=Math.random()*h, r=Math.random(); g.fillStyle='rgba(255,255,255,'+(.25+Math.random()*.75)+')'; g.beginPath(); g.arc(sx,sy, r<.92? .8+Math.random()*1.1 : 1.9+Math.random()*1.4, 0, 7); g.fill();}
+  function cons(pts,label,lx,ly){ g.strokeStyle='rgba(150,180,240,.38)'; g.lineWidth=1.6; g.beginPath(); pts.forEach(function(p,pi2){ if(pi2===0)g.moveTo(p[0],p[1]); else g.lineTo(p[0],p[1]);}); g.stroke(); pts.forEach(function(p){ g.fillStyle='rgba(210,225,255,.32)'; g.beginPath(); g.arc(p[0],p[1],7.5,0,7); g.fill(); g.fillStyle='#eaf1ff'; g.beginPath(); g.arc(p[0],p[1],3.4,0,7); g.fill();}); if(label){ g.fillStyle='rgba(190,205,240,.85)'; g.font='italic 21px Georgia'; g.fillText(label,lx,ly);} }
+  cons([[110,200],[175,218],[245,205],[305,232],[368,278],[448,262],[520,305]],'Ursa Major — the Great Bear',100,160);
+  cons([[690,120],[752,172],[818,132],[878,188],[948,148]],'Cassiopeia',700,92);
+  cons([[150,660],[290,650],[264,784],[292,866],[188,872],[212,748],[150,660]],'Orion',118,622);
+  cons([[700,458],[700,560],[700,668]],'Cygnus — the Swan',716,452);
+  cons([[630,560],[700,560],[778,560]],'',0,0);
+  cons([[880,398],[898,442],[922,436],[934,472],[906,478],[898,442]],'Lyra',852,372);
+}); t.wrapS=THREE.ClampToEdgeWrapping; t.wrapT=THREE.ClampToEdgeWrapping; t.repeat.set(1/20,1/16); t.offset.set(.5,.5); return t;}
+var ceil=new THREE.Mesh(new THREE.ShapeGeometry(ceilShape,24),new THREE.MeshBasicMaterial({map:starCeilTex(),side:THREE.DoubleSide})); ceil.rotation.x=Math.PI/2; ceil.position.y=RH; scene.add(ceil);
+// Twinkling stars just under the ceiling skin (kept clear of the sun port)
+var csCount=240; var csGeo=new THREE.BufferGeometry(); var csPos=new Float32Array(csCount*3); var csPlaced=0;
+while(csPlaced<csCount){var cx2=(Math.random()-.5)*19.4, cz2=(Math.random()-.5)*15.4; if(Math.hypot(cx2+2.2,cz2-.4)<1.6)continue; csPos[csPlaced*3]=cx2; csPos[csPlaced*3+1]=RH-.04; csPos[csPlaced*3+2]=cz2; csPlaced++;}
+csGeo.setAttribute('position',new THREE.BufferAttribute(csPos,3));
+var csMat=new THREE.PointsMaterial({size:.07,transparent:true,opacity:.85,depthWrite:false,color:0xdce8ff});
+var ceilStars=new THREE.Points(csGeo,csMat); scene.add(ceilStars);
 // Sun port: ring, shaft tube, sky disc with sun, drifting clouds, light falling on the fire
 var portRing=new THREE.Mesh(new THREE.TorusGeometry(1.25,.09,10,36),darkWood); portRing.rotation.x=Math.PI/2; portRing.position.set(-2.2,RH-.03,0.4); scene.add(portRing);
 var portTube=new THREE.Mesh(new THREE.CylinderGeometry(1.25,1.25,.6,24,1,true),new THREE.MeshStandardMaterial({color:0x6a4a2c,roughness:.9,side:THREE.DoubleSide})); portTube.position.set(-2.2,RH+.3,0.4); scene.add(portTube);
@@ -497,6 +519,84 @@ for(var sbi=0;sbi<3;sbi++){var sb=new THREE.Mesh(new THREE.BoxGeometry(.44-sbi*.
 hot(nookRug,'📚 The reading nook — north-west corner','A deep chair, a rug, a side table with a book left open. The shelf beside it holds our books — scripture, studies, stories, and our own drafts. Sit and read a while.');
 hot(chair2Grp,'📖 The reading chair','Deep, worn, facing the fire — book on the side table, mug beside it. The nook\u2019s best seat.');
 
+// ---------- The Bible — on its own wooden stand beside the reading nook ----------
+function bibleCoverTex(){return cnv(512,384,function(g,w,h){g.fillStyle='#3d2013';g.fillRect(0,0,w,h);for(var i=0;i<300;i++){g.fillStyle='rgba(0,0,0,'+Math.random()*0.09+')';g.fillRect(Math.random()*w,Math.random()*h,3,3);}g.strokeStyle='#c9a06a';g.lineWidth=5;g.strokeRect(20,20,w-40,h-40);g.lineWidth=2;g.strokeRect(34,34,w-68,h-68);g.fillStyle='#e9c46a';g.fillRect(246,66,20,112);g.fillRect(214,102,84,20);g.font='bold 46px Georgia';g.textAlign='center';g.fillText('HOLY',256,252);g.fillText('BIBLE',256,304);g.font='italic 20px Georgia';g.fillStyle='#c9a06a';g.fillText('kept by the fire, read in the nook',256,342);});}
+var lectGrp=new THREE.Group(); lectGrp.position.set(-6.1,0,-3.85); lectGrp.rotation.y=.55; scene.add(lectGrp);
+function lectPart(geo,mat,x,y,z){var m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;lectGrp.add(m);return m;}
+lectPart(new THREE.BoxGeometry(.78,.07,.54),darkWood,0,.035,0); // base
+lectPart(new THREE.BoxGeometry(.13,1.0,.13),woodMat,0,.55,-.05); // post
+lectPart(new THREE.BoxGeometry(.5,.05,.4),darkWood,0,.16,0); // foot shelf
+var lectTop=new THREE.Group(); lectTop.position.set(0,1.08,-.02); lectTop.rotation.x=.38; lectGrp.add(lectTop);
+var lectBoard=new THREE.Mesh(new THREE.BoxGeometry(.82,.045,.58),woodMat); lectBoard.castShadow=true; lectBoard.receiveShadow=true; lectTop.add(lectBoard);
+var lectLip=new THREE.Mesh(new THREE.BoxGeometry(.82,.06,.035),darkWood); lectLip.position.set(0,.02,.28); lectTop.add(lectLip);
+var bibleGrp=new THREE.Group(); bibleGrp.position.set(0,.075,.01); lectTop.add(bibleGrp);
+var bibleBody=new THREE.Mesh(new THREE.BoxGeometry(.5,.078,.36),new THREE.MeshStandardMaterial({color:0x3d2013,roughness:.7})); bibleBody.castShadow=true; bibleGrp.add(bibleBody);
+var biblePages=new THREE.Mesh(new THREE.BoxGeometry(.488,.046,.348),new THREE.MeshStandardMaterial({color:0xe8d9ae,roughness:.9})); bibleGrp.add(biblePages);
+var bibleCover=new THREE.Mesh(new THREE.PlaneGeometry(.5,.36),new THREE.MeshStandardMaterial({map:bibleCoverTex(),roughness:.65})); bibleCover.rotation.x=-Math.PI/2; bibleCover.position.y=.041; bibleGrp.add(bibleCover);
+var bibleLight=new THREE.PointLight(0xffd9a0,.35,2.6,1.6); bibleLight.position.set(-6.3,1.7,-3.4); scene.add(bibleLight);
+hot(lectGrp,'📖 The Bible — on its stand by the reading nook','Dark leather, gold cross, gilt edges — resting on a wooden stand between the nook and the fire. Cliff\u2019s anchor text lives in it: Job 38–42, the whirlwind. It has its own place in this room.');
+
+// ---------- The standing mirror — south wall, east end. A true reflection: the room, and you in it. ----------
+var mirrorGrp=new THREE.Group(); mirrorGrp.position.set(7.2,0,7.28); mirrorGrp.rotation.y=Math.PI; scene.add(mirrorGrp);
+function mirPart(geo,mat,x,y,z){var m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;mirrorGrp.add(m);return m;}
+var brassMat=new THREE.MeshStandardMaterial({color:0xc9a06a,roughness:.4,metalness:.55});
+mirPart(new THREE.BoxGeometry(.1,2.52,.09),darkWood,-.56,1.26,0); // posts
+mirPart(new THREE.BoxGeometry(.1,2.52,.09),darkWood,.56,1.26,0);
+mirPart(new THREE.BoxGeometry(1.22,.1,.09),darkWood,0,2.42,0); // top rail
+mirPart(new THREE.BoxGeometry(1.22,.09,.09),darkWood,0,.42,0); // lower rail
+mirPart(new THREE.BoxGeometry(.09,.06,.6),darkWood,-.56,.03,.06); // feet
+mirPart(new THREE.BoxGeometry(.09,.06,.6),darkWood,.56,.03,.06);
+mirPart(new THREE.BoxGeometry(1.06,.045,.02),brassMat,0,2.31,.045); // brass trim
+mirPart(new THREE.BoxGeometry(1.06,.045,.02),brassMat,0,.53,.045);
+var mirrorRT=new THREE.WebGLRenderTarget(512,512);
+var mirrorTexMat=new THREE.Matrix4();
+var mirrorMat=new THREE.ShaderMaterial({
+  uniforms:{tDiffuse:{value:mirrorRT.texture},textureMatrix:{value:mirrorTexMat},tint:{value:new THREE.Color(0.86,0.92,0.95)}},
+  vertexShader:'uniform mat4 textureMatrix; varying vec4 vP; void main(){ vP = textureMatrix * vec4(position,1.0); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+  fragmentShader:'uniform sampler2D tDiffuse; uniform vec3 tint; varying vec4 vP; void main(){ vec2 uv = vP.xy / max(vP.w, 0.0001); vec3 c = texture2D(tDiffuse, uv).rgb; gl_FragColor = vec4(c * tint, 1.0); }'
+});
+var mirrorMesh=new THREE.Mesh(new THREE.PlaneGeometry(1.02,1.86),mirrorMat); mirrorMesh.position.set(0,1.42,.012); mirrorGrp.add(mirrorMesh);
+hot(mirrorGrp,'🪞 The standing mirror — south wall','Step in front of it: there you are, a quiet figure in the room — and behind you the fire, the water, the banners, all held in the glass. It reflects the room live, as you move.');
+// The visitor's figure — it exists only inside the mirror's render pass, so the glass can show you yourself.
+var avatarGrp=new THREE.Group(); avatarGrp.visible=false; scene.add(avatarGrp);
+var avCloth=new THREE.MeshStandardMaterial({color:0x262230,roughness:.95});
+var avBody=new THREE.Mesh(new THREE.CylinderGeometry(.165,.27,1.34,12),avCloth); avBody.position.y=.68; avatarGrp.add(avBody);
+var avShoulders=new THREE.Mesh(new THREE.SphereGeometry(.19,12,10),avCloth); avShoulders.position.y=1.32; avShoulders.scale.set(1.15,.6,1); avatarGrp.add(avShoulders);
+var avHead=new THREE.Mesh(new THREE.SphereGeometry(.135,14,12),new THREE.MeshStandardMaterial({color:0xc9a581,roughness:.7})); avHead.position.y=1.53; avatarGrp.add(avHead);
+var avBand=new THREE.Mesh(new THREE.BoxGeometry(.23,.09,.03),new THREE.MeshStandardMaterial({color:0x2a7a8a,roughness:.7})); avBand.position.set(0,1.16,.185); avBand.rotation.x=-.18; avatarGrp.add(avBand);
+var virtCam=new THREE.PerspectiveCamera();
+var _mw=new THREE.Vector3(), _cp=new THREE.Vector3(), _mn=new THREE.Vector3(), _rm=new THREE.Matrix4(), _vv=new THREE.Vector3(), _lv=new THREE.Vector3(), _tv=new THREE.Vector3();
+var mirrorClip=new THREE.Plane();
+function updateMirror(){
+  mirrorMesh.updateMatrixWorld();
+  _mw.setFromMatrixPosition(mirrorMesh.matrixWorld);
+  _cp.setFromMatrixPosition(camera.matrixWorld);
+  _mn.set(0,0,1); _mn.transformDirection(mirrorMesh.matrixWorld);
+  _vv.subVectors(_mw,_cp);
+  if(_vv.dot(_mn)>0)return; // camera is behind the glass
+  _vv.reflect(_mn).negate(); _vv.add(_mw);
+  _rm.extractRotation(camera.matrixWorld);
+  _lv.set(0,0,-1); _lv.applyMatrix4(_rm); _lv.add(_cp);
+  _tv.subVectors(_mw,_lv); _tv.reflect(_mn).negate(); _tv.add(_mw);
+  virtCam.position.copy(_vv);
+  virtCam.up.set(0,1,0); virtCam.up.applyMatrix4(_rm); virtCam.up.reflect(_mn);
+  virtCam.lookAt(_tv);
+  virtCam.near=camera.near; virtCam.far=camera.far; virtCam.fov=camera.fov; virtCam.aspect=camera.aspect;
+  virtCam.updateMatrixWorld(); virtCam.updateProjectionMatrix();
+  mirrorTexMat.set(.5,0,0,.5, 0,.5,0,.5, 0,0,.5,.5, 0,0,0,1);
+  mirrorTexMat.multiply(virtCam.projectionMatrix);
+  mirrorTexMat.multiply(virtCam.matrixWorldInverse);
+  mirrorTexMat.multiply(mirrorMesh.matrixWorld);
+  mirrorClip.setFromNormalAndCoplanarPoint(_mn,_mw);
+  avatarGrp.position.set(pos.x,0,pos.z); avatarGrp.rotation.y=yaw+Math.PI;
+  mirrorMesh.visible=false; avatarGrp.visible=true;
+  var prevRT=renderer.getRenderTarget();
+  renderer.clippingPlanes=[mirrorClip];
+  renderer.setRenderTarget(mirrorRT); renderer.clear(); renderer.render(scene,virtCam);
+  renderer.setRenderTarget(prevRT); renderer.clippingPlanes=[];
+  mirrorMesh.visible=true; avatarGrp.visible=false;
+}
+
 // ---------- Movement / first person ----------
 var yaw=0, pitch=0; // yaw 0 = facing -z = north: fire center-frame, Bill & tree beyond it
 var pos=new THREE.Vector3(0,1.65,6.8);
@@ -525,8 +625,13 @@ function zoneText(){
   if(dCat<1.7)return 'With the cat by the fire. It picked the warmest spot in the room — sit down, you\u2019re in good company.';
   var dFire=Math.hypot(pos.x+2.2,pos.z-.4);
   if(dFire<2.6)return 'By the fire. Sit a while — linger in the middle. And look up: the sun port is right overhead, sun and sky through the roof.';
+  var dBible=Math.hypot(pos.x+6.1,pos.z+3.85);
+  if(dBible<1.9)return 'By the Bible on its stand — dark leather, gold cross, gilt edges. It keeps its own place here, between the nook and the fire.';
+  var dMirror=Math.hypot(pos.x-7.2,pos.z-7.28);
+  if(dMirror<2.2)return 'Before the standing mirror. There you are — and the fire, the water, and the whole room behind you, held in the glass.';
   if(Math.abs(pos.x-1.2)<1.1)return 'In the living water. It runs clear through the room — use the bridge at the center to cross dry.';
   if(pos.z>5.4&&pos.x<-1)return 'By the open window. Light coming through, sky outside — and the wind with it, moving the curtains, carrying leaves in.';
+  if(pos.x>5.6&&pos.z>5.8)return 'By the standing mirror, at the east end of the south wall. Step in front of it and see yourself, and the room behind you.';
   if(pos.x>6&&pos.z>3.6)return 'The quiet corner. Just for rest — no task here.';
   if(pos.x<-7.4&&pos.z>2.2)return 'At the desk. The laptop is open in the window light — notes for the Ark on its screen, chair tucked in, mug gone cold.';
   if(pos.x<-6.2&&pos.z<-4.2)return 'In the reading nook. Our shelf is right here — scripture and the studies on the lower shelves, Sanderson, King and Carr up top, our own drafts with them. The chair faces the fire.';
@@ -588,6 +693,10 @@ function animate(){
   for(var hi=0;hi<hotspots.length;hi++){var hp=new THREE.Vector3(); hotspots[hi].getWorldPosition(hp); var dx=hp.x-pos.x, dz=hp.z-pos.z; var hd=Math.hypot(dx,dz); if(hd<0.01)continue; var facing=(dx*fwdX+dz*fwdZ)/hd; if(hd<bestD&&facing>0.25){bestD=hd;best=hotspots[hi];}}
   if(best&&best.userData.hot){hintEl.textContent=best.userData.hot.label+' — '+best.userData.hot.text;}
   else hintEl.textContent=zoneText();
+  // Ceiling stars twinkle, slow and quiet
+  csMat.opacity=.68+Math.sin(t*1.6)*.2+Math.sin(t*4.1)*.07;
+  // The mirror: refresh its reflection (room + visitor) before the main render
+  updateMirror();
   renderer.render(scene,camera);
 }
 animate();
