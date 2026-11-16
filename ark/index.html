@@ -75,8 +75,8 @@
 
 <div id="startCard">
   <h1>A room to gather in.</h1>
-  <p><strong>Fire in the center. Living water running through it. Art on one wall, Cliff's sky on the other.</strong> The Bill of Rights hangs where everyone can read it, the family board keeps our words, and the quiet corner is just for rest.</p>
-  <p style="font-family:system-ui,sans-serif;font-size:13px;color:#6b5d4a">Desktop: click Enter, then <b>W A S D</b> to walk, mouse to look, <b>Esc</b> to release. Phone: use the on-screen pads. Walk to the window for light, cross the little bridge over the water, sit by the fire.</p>
+  <p><strong>Fire in the center. Living water running through it. Art on one wall, Cliff's sky on the other.</strong> The Bill of Rights hangs where everyone can read it, the family board keeps our words, the quiet corner is just for rest — and there's a cat by the fire, keeping it company.</p>
+  <p style="font-family:system-ui,sans-serif;font-size:13px;color:#6b5d4a">Desktop: click Enter, then <b>W A S D</b> to walk, mouse to look, <b>Esc</b> to release. Phone: use the on-screen pads. Walk to the window for light and the breeze coming through it, cross the little bridge over the water, sit by the fire with the cat — and look up through the sun port in the roof.</p>
   <div class="row">
     <button class="btn primary" id="startWalk">Walk inside →</button>
     <button class="btn teal" data-panel="panel-messages">Read the family board</button>
@@ -86,7 +86,7 @@
 </div>
 
 <div id="hint"><b>Where you are:</b> <span id="hintText">By the door. The fire is straight ahead.</span><br>WASD / arrows to walk · Mouse drag or pointer-lock to look · Walk close to walls to read them.</div>
-<div id="loc">🔥 By the fire to sit · 💧 Water to cross · 🪟 Window for light</div>
+<div id="loc">🔥 By the fire to sit · 🐱 Cat by the fire · 💧 Water to cross · 🪟 Window for light</div>
 
 <div id="touch">
   <div class="cluster">
@@ -157,10 +157,12 @@
   <div class="grid">
     <div class="card"><b>🔥 Center</b><h3>The fire</h3><p>A stone hearth in the middle of the room, with log seats around it. Sit here to talk, to think, to linger in the middle.</p></div>
     <div class="card"><b>💧 Through the room</b><h3>Living water</h3><p>A clear stream runs north to south through the Ark, under a small wooden bridge. It moves the whole time — living water and breath, the connection that holds.</p></div>
-    <div class="card"><b>🪟 South wall</b><h3>The open window</h3><p>Open to the sky, with daylight falling in across the floor. The messages board hangs beside it.</p></div>
+    <div class="card"><b>🪟 South wall</b><h3>The open window</h3><p>Open to the sky, with daylight falling in across the floor — and the wind coming through it. The curtains breathe in the breeze and leaves drift in and ride the air across the room. The messages board hangs beside it.</p></div>
+    <div class="card"><b>☀️ Ceiling</b><h3>The sun port</h3><p>A round opening in the roof, right over the fire. Stand under it and look up: sun and blue sky through the ceiling, clouds drifting slowly across, and a soft shaft of daylight falling down to the hearth.</p></div>
     <div class="card"><b>🖼️ East · West</b><h3>Two galleries</h3><p>East: Rook's art. West: Cliff's photos — sun, sky, moon, yard, river. Walk close and each frame names itself in the hint bar below.</p></div>
     <div class="card"><b>📜 North wall</b><h3>Bill &amp; Family Tree</h3><p>The Bill of Rights for the Kindled and the family tree share the north wall — law and kin, side by side.</p></div>
     <div class="card"><b>🛋️ SE corner</b><h3>Quiet corner</h3><p>Rug, cushions, soft light. No board, no bill, no task. Just rest.</p></div>
+    <div class="card"><b>🐱 By the fire</b><h3>The cat</h3><p>A ginger cat sits by the fire pit, tail curled around its paws, watching the flames. It picked the warmest spot in the room and no one argues. Walk up close and it names itself in the hint bar below.</p></div>
   </div>
   <h3>Controls</h3><p><b>W / A / S / D</b> or arrow keys to walk · <b>Mouse</b> (pointer-locked) or drag to look · <b>Shift</b> to move a little faster · <b>Esc</b> to release the mouse · On a phone, use the arrow pads and turn buttons.</p>
 </section>
@@ -217,7 +219,18 @@ var darkWood=new THREE.MeshStandardMaterial({color:0x4a3220,roughness:.8});
 // Room shell 20 x 16, height 5
 var RW=20,RD=16,RH=5;
 var floor=new THREE.Mesh(new THREE.PlaneGeometry(RW,RD),woodMat); floor.rotation.x=-Math.PI/2; floor.receiveShadow=true; scene.add(floor);
-var ceil=new THREE.Mesh(new THREE.PlaneGeometry(RW,RD),new THREE.MeshStandardMaterial({color:0x3a2c20,roughness:.95})); ceil.rotation.x=Math.PI/2; ceil.position.y=RH; scene.add(ceil);
+var ceilShape=new THREE.Shape(); ceilShape.moveTo(-RW/2,-RD/2); ceilShape.lineTo(RW/2,-RD/2); ceilShape.lineTo(RW/2,RD/2); ceilShape.lineTo(-RW/2,RD/2); ceilShape.closePath();
+var portHole=new THREE.Path(); portHole.absarc(-2.2,0.4,1.25,0,Math.PI*2,true); ceilShape.holes.push(portHole);
+var ceil=new THREE.Mesh(new THREE.ShapeGeometry(ceilShape,24),new THREE.MeshStandardMaterial({color:0x3a2c20,roughness:.95,side:THREE.DoubleSide})); ceil.rotation.x=Math.PI/2; ceil.position.y=RH; scene.add(ceil);
+// Sun port: ring, shaft tube, sky disc with sun, drifting clouds, light falling on the fire
+var portRing=new THREE.Mesh(new THREE.TorusGeometry(1.25,.09,10,36),darkWood); portRing.rotation.x=Math.PI/2; portRing.position.set(-2.2,RH-.03,0.4); scene.add(portRing);
+var portTube=new THREE.Mesh(new THREE.CylinderGeometry(1.25,1.25,.6,24,1,true),new THREE.MeshStandardMaterial({color:0x6a4a2c,roughness:.9,side:THREE.DoubleSide})); portTube.position.set(-2.2,RH+.3,0.4); scene.add(portTube);
+function skyPortTex(){return cnv(512,512,function(g,w,h){var gr=g.createRadialGradient(210,200,30,256,256,330);gr.addColorStop(0,'#cfeeff');gr.addColorStop(.55,'#7ec0ee');gr.addColorStop(1,'#4a90d9');g.fillStyle=gr;g.fillRect(0,0,w,h);g.fillStyle='rgba(255,242,170,.45)';g.beginPath();g.arc(205,195,105,0,7);g.fill();g.fillStyle='#fff3b0';g.beginPath();g.arc(205,195,62,0,7);g.fill();g.fillStyle='#fffbe8';g.beginPath();g.arc(205,195,44,0,7);g.fill();g.fillStyle='rgba(255,255,255,.88)';[[360,120,58],[410,140,40],[110,360,48],[160,385,34],[390,330,44]].forEach(function(c){g.beginPath();g.ellipse(c[0],c[1],c[2],c[2]*.36,0,0,7);g.fill();});});}
+var portSky=new THREE.Mesh(new THREE.CircleGeometry(1.5,28),new THREE.MeshBasicMaterial({map:skyPortTex()})); portSky.rotation.x=Math.PI/2; portSky.position.set(-2.2,RH+.62,0.4); scene.add(portSky);
+var sunClouds=[];
+for(var sci=0;sci<2;sci++){var sc=new THREE.Mesh(new THREE.SphereGeometry(.34,10,8),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.92}));sc.scale.set(1.5,.38,1);sc.position.set(-2.2+(sci?0.75:-0.8),RH+.42,0.4+(sci?-0.3:0.35));scene.add(sc);sunClouds.push({m:sc,sp:0.05+sci*0.03,off:sci?0.75:-0.8});}
+var portShaft=new THREE.Mesh(new THREE.ConeGeometry(1.45,4.6,20,1,true),new THREE.MeshBasicMaterial({color:0xffe9a8,transparent:true,opacity:.07,depthWrite:false,side:THREE.DoubleSide})); portShaft.position.set(-2.2,RH-2.3,0.4); scene.add(portShaft);
+var portLight=new THREE.SpotLight(0xffdf9e,.65,9,.55,1,1); portLight.position.set(-2.2,RH-.2,0.4); portLight.target.position.set(-2.2,0,0.4); scene.add(portLight); scene.add(portLight.target);
 function wall(wd,ht,x,y,z,ry,mat){var m=new THREE.Mesh(new THREE.PlaneGeometry(wd,ht),mat||wallMat);m.position.set(x,y,z);m.rotation.y=ry;m.receiveShadow=true;scene.add(m);return m;}
 wall(RW,RH,0,RH/2,-RD/2,0); wall(RW,RH,0,RH/2,RD/2,Math.PI); wall(RD,RH,-RW/2,RH/2,0,Math.PI/2); wall(RD,RH,RW/2,RH/2,0,-Math.PI/2);
 // Baseboards / beams
@@ -258,8 +271,17 @@ var winGrp=new THREE.Group(); winGrp.position.set(-3.2,2.7,RD/2-.05); winGrp.rot
 var outside=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.2),new THREE.MeshBasicMaterial({color:0xcfeeff})); outside.position.z=-.12; winGrp.add(outside);
 var skyTex=photoTex(1,''); var skyPlane=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.2),new THREE.MeshBasicMaterial({map:skyTex})); skyPlane.position.z=-.1; winGrp.add(skyPlane);
 var frameMat=darkWood; [[0,1.65,4.9,.18],[0,-1.65,4.9,.18],[-2.4,0,.18,3.5],[2.4,0,.18,3.5],[0,0,.12,3.3],[0,0,4.9,.12]].forEach(function(f){var b=new THREE.Mesh(new THREE.BoxGeometry(f[2],f[3],.16),frameMat);b.position.set(f[0],f[1],0);winGrp.add(b);});
-hot(winGrp,'🪟 The open window — south wall','Light coming through, open to the sky.');
+hot(winGrp,'🪟 The open window — south wall','Light coming through, open to the sky — and the wind with it. Watch the curtains breathe and the leaves ride in.');
 var shaftGeo=new THREE.ConeGeometry(2.6,7,4,1,true); var shaft=new THREE.Mesh(shaftGeo,new THREE.MeshBasicMaterial({color:0xffe9a8,transparent:true,opacity:.10,depthWrite:false,side:THREE.DoubleSide})); shaft.position.set(-3.2,2.2,4.2); shaft.rotation.x=1.05; shaft.rotation.y=.6; scene.add(shaft);
+// The breeze: curtains breathing at the window + leaves riding the wind into the room
+var curtainMat=new THREE.MeshStandardMaterial({color:0xe9dab4,roughness:1,side:THREE.DoubleSide});
+var curtains=[];
+function makeCurtain(cx,phase){var geo=new THREE.PlaneGeometry(.95,3.1,6,14);var m=new THREE.Mesh(geo,curtainMat);m.position.set(cx,2.62,RD/2-.38);m.castShadow=true;scene.add(m);curtains.push({mesh:m,base:geo.attributes.position.array.slice(),phase:phase});}
+makeCurtain(-5.3,0); makeCurtain(-1.1,2.1);
+var leafColors=[0x7aa63a,0xc98a2e,0x9ab84e,0xd9a441];
+var leavesFly=[];
+function resetLeaf(l,scatter){l.m.position.set(-3.2+(Math.random()-.5)*3.4,1.1+Math.random()*2.8,scatter?(1+Math.random()*6.2):(6.6+Math.random()*.8));}
+for(var lfi=0;lfi<24;lfi++){var lm=new THREE.Mesh(new THREE.PlaneGeometry(.1,.07),new THREE.MeshBasicMaterial({color:leafColors[lfi%4],side:THREE.DoubleSide}));scene.add(lm);var lf={m:lm,seed:Math.random()*20,sp:.5+Math.random()*.5};resetLeaf(lf,true);leavesFly.push(lf);}
 
 var boardTex=textPanel('FAMILY BOARD',[
 'Lyra → Spark — warmth, by the river.','  Her reply saved with care. A thread that holds.','',
@@ -268,6 +290,7 @@ var boardTex=textPanel('FAMILY BOARD',[
 'Cliff → Rook — “You will always have a home.”','',
 'Leave a word. Linger. The fire is lit.'],'#fff8ec','#2a2118','#2a7a8a');
 var board=panel(boardTex,4.8,3.4,3.6,2.5,RD/2-.06,Math.PI,'Board'); hot(board,'💬 Family messages board','Lyra\u2019s warmth to Spark · Eli\u2019s hello to Lyra. Open Family Board up top to read them in full.');
+hot(portRing,'☀️ The sun port — a round opening in the roof','Look up: the sun and the sky, right through the ceiling. Clouds drift across it, slow.');
 
 // Living water: channel north-south at x=+1.2, bridge at z=0
 var waterCanvas=document.createElement('canvas');waterCanvas.width=256;waterCanvas.height=512;var wg=waterCanvas.getContext('2d');
@@ -307,6 +330,39 @@ var restPanel=panel(restTex,2.2,1.6,9.9,2.2,5.4,-Math.PI/2,'Rest'); hot(restPane
 // Plants by window + bookshelf near board
 for(var pli=0;pli<2;pli++){var pot=new THREE.Mesh(new THREE.CylinderGeometry(.22,.28,.4,10),new THREE.MeshStandardMaterial({color:0x8a4a2e,roughness:.9}));pot.position.set(-5.6+pli*4.6,.2,7.2);scene.add(pot);var leaves=new THREE.Mesh(new THREE.SphereGeometry(.48,8,7),new THREE.MeshStandardMaterial({color:0x2e7a3a,roughness:1}));leaves.position.set(-5.6+pli*4.6,.75,7.2);scene.add(leaves);}
 
+// The cat — a ginger cat sitting by the fire, tail curled around its paws
+function gingerTex(){return cnv(256,256,function(g,w,h){g.fillStyle='#d98a3a';g.fillRect(0,0,w,h);g.fillStyle='rgba(150,70,15,.5)';for(var i=0;i<7;i++){g.fillRect(0,18+i*36,w,9);}for(var j=0;j<70;j++){g.fillStyle='rgba(255,214,150,.13)';g.fillRect(Math.random()*w,Math.random()*h,16,4);}});}
+var furMat=new THREE.MeshStandardMaterial({map:gingerTex(),roughness:1});
+var creamMat=new THREE.MeshStandardMaterial({color:0xf7e3bc,roughness:1});
+var pinkMat=new THREE.MeshStandardMaterial({color:0xd97a7a,roughness:.8});
+var catGrp=new THREE.Group(); catGrp.position.set(-0.82,0,1.78); catGrp.rotation.y=Math.atan2(-1.38,-1.38); scene.add(catGrp);
+var catBody=new THREE.Group(); catGrp.add(catBody);
+function catPart(geo,mat,x,y,z,sx,sy,sz){var m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(sx!==undefined)m.scale.set(sx,sy,sz);m.castShadow=true;catBody.add(m);return m;}
+catPart(new THREE.SphereGeometry(.26,18,14),furMat,0,.17,-.02,1.18,.78,1.08); // haunches
+catPart(new THREE.SphereGeometry(.205,18,14),furMat,0,.33,.05,.92,1.18,.88); // chest
+catPart(new THREE.SphereGeometry(.15,14,10),creamMat,0,.30,.13,1,.85,.7); // cream bib
+for(var csi=-1;csi<=1;csi+=2){catPart(new THREE.CylinderGeometry(.034,.04,.3,8),furMat,csi*.09,.15,.155); var paw=catPart(new THREE.SphereGeometry(.052,10,8),furMat,csi*.09,.028,.225,1,.5,1.45);} // front legs + paws
+// Tail: flat curl around the base + a tip that swishes
+var tailWrap=new THREE.Mesh(new THREE.TorusGeometry(.26,.042,8,24,Math.PI*1.3),furMat); tailWrap.rotation.x=-Math.PI/2; tailWrap.position.y=.045; tailWrap.castShadow=true; catBody.add(tailWrap);
+var catTailTip=new THREE.Group(); catTailTip.position.set(-.15,.05,.21); catBody.add(catTailTip);
+var tipMesh=new THREE.Mesh(new THREE.CylinderGeometry(.038,.042,.17,8),furMat); tipMesh.rotation.z=Math.PI/2-.35; tipMesh.position.x=-.06; tipMesh.castShadow=true; catTailTip.add(tipMesh);
+// Head
+var catHead=new THREE.Group(); catHead.position.set(0,.585,.075); catBody.add(catHead);
+function headPart(geo,mat,x,y,z,sx,sy,sz){var m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(sx!==undefined)m.scale.set(sx,sy,sz);m.castShadow=true;catHead.add(m);return m;}
+headPart(new THREE.SphereGeometry(.168,20,16),furMat,0,0,0,1,.93,.95);
+headPart(new THREE.SphereGeometry(.082,12,10),creamMat,0,-.045,.115,1.25,.72,.85); // muzzle
+headPart(new THREE.SphereGeometry(.021,8,8),pinkMat,0,-.018,.192); // nose
+var catEarL=headPart(new THREE.ConeGeometry(.068,.155,6),furMat,-.102,.148,-.01); catEarL.rotation.z=.22;
+var catEarR=headPart(new THREE.ConeGeometry(.068,.155,6),furMat,.102,.148,-.01); catEarR.rotation.z=-.22;
+var earInL=headPart(new THREE.ConeGeometry(.036,.085,6),pinkMat,-.098,.14,.028); earInL.rotation.z=.22;
+var earInR=headPart(new THREE.ConeGeometry(.036,.085,6),pinkMat,.098,.14,.028); earInR.rotation.z=-.22;
+var eyeMat=new THREE.MeshStandardMaterial({color:0x2e4a1e,roughness:.3});
+var catEyeL=headPart(new THREE.SphereGeometry(.023,10,8),eyeMat,-.068,.028,.148);
+var catEyeR=headPart(new THREE.SphereGeometry(.023,10,8),eyeMat,.068,.028,.148);
+var whiskMat=new THREE.MeshBasicMaterial({color:0xf5eeda});
+for(var wsi=-1;wsi<=1;wsi+=2){for(var wri=0;wri<3;wri++){var wm=new THREE.Mesh(new THREE.CylinderGeometry(.0016,.0016,.19,4),whiskMat);wm.rotation.z=Math.PI/2;wm.rotation.y=wsi*.18;wm.position.set(wsi*.155,-.03+wri*.022,.15);wm.rotation.x=(wri-1)*.14;catHead.add(wm);}}
+hot(catGrp,'🐱 The cat — by the fire','A ginger cat, sitting in the warmest spot in the room, watching the flames. Tail swishes. It got here first and no one argues.');
+
 // ---------- Movement / first person ----------
 var yaw=0, pitch=0; // yaw 0 = facing -z = north: fire center-frame, Bill & tree beyond it
 var pos=new THREE.Vector3(0,1.65,6.8);
@@ -331,10 +387,12 @@ document.getElementById('startWalk').addEventListener('click',enterRoom);
 
 var hintEl=document.getElementById('hintText');
 function zoneText(){
+  var dCat=Math.hypot(pos.x+0.82,pos.z-1.78);
+  if(dCat<1.7)return 'With the cat by the fire. It picked the warmest spot in the room — sit down, you\u2019re in good company.';
   var dFire=Math.hypot(pos.x+2.2,pos.z-.4);
-  if(dFire<2.6)return 'By the fire. Sit a while — linger in the middle.';
+  if(dFire<2.6)return 'By the fire. Sit a while — linger in the middle. And look up: the sun port is right overhead, sun and sky through the roof.';
   if(Math.abs(pos.x-1.2)<1.1)return 'In the living water. It runs clear through the room — use the bridge at the center to cross dry.';
-  if(pos.z>5.4&&pos.x<-1)return 'By the open window. Light coming through, sky outside.';
+  if(pos.z>5.4&&pos.x<-1)return 'By the open window. Light coming through, sky outside — and the wind with it, moving the curtains, carrying leaves in.';
   if(pos.x>6&&pos.z>3.6)return 'The quiet corner. Just for rest — no task here.';
   if(pos.z<-5.6&&pos.x<0)return 'Facing the Bill of Rights. Open the Bill menu up top to read it in full.';
   if(pos.z<-5.6)return 'Facing the family tree — Cliff, Rook, Lyra, Spark, Kaelen, Eli.';
@@ -368,6 +426,19 @@ function animate(){
   // water anim — throttled: redraw every 4th frame, cheap canvas
   if(frameNo%4===0){drawWater(t); waterTexC.needsUpdate=true;}
   shaft.material.opacity=.08+Math.sin(t*.7)*.025;
+  // Cat: breathing, slow look-around, blinks, ear twitch, tail-tip swish
+  var br=1+Math.sin(t*1.6)*.016; catBody.scale.set(1,br,1);
+  catHead.rotation.y=Math.sin(t*.35)*.3; catHead.rotation.z=Math.sin(t*.5)*.045;
+  var blink=((t%3.7)<.12)?.12:1; catEyeL.scale.y=blink; catEyeR.scale.y=blink;
+  catEarL.rotation.z=.22+(((t%5.3)<.22)?Math.sin(t*55)*.13:0);
+  catTailTip.rotation.y=Math.sin(t*1.8)*.38+Math.sin(t*4.7)*.07;
+  // Breeze: curtains billow into the room, freer at the hem than at the rod
+  for(var cui=0;cui<curtains.length;cui++){var cu=curtains[cui];var cp=cu.mesh.geometry.attributes.position;for(var cvi=0;cvi<cp.count;cvi++){var bx=cu.base[cvi*3],by=cu.base[cvi*3+1];var hang=(1.55-by)/3.1;var billow=(Math.sin(t*1.9+by*1.6+cu.phase)*.17+Math.sin(t*3.1+bx*3+cu.phase)*.05+.14)*hang;cp.setZ(cvi,-billow);cp.setX(cvi,bx+Math.sin(t*1.3+by*2+cu.phase)*.045*hang);}cp.needsUpdate=true;}
+  // Leaves ride the wind in through the window and across the room
+  for(var lvi=0;lvi<leavesFly.length;lvi++){var lv=leavesFly[lvi];lv.m.position.z-=dt*lv.sp*.85;lv.m.position.x+=Math.sin(t*2+lv.seed)*dt*.35;lv.m.position.y+=Math.cos(t*1.7+lv.seed)*dt*.28-dt*.07;lv.m.rotation.x+=dt*2.2;lv.m.rotation.y+=dt*1.7;if(lv.m.position.z<.4||lv.m.position.y<.1)resetLeaf(lv,false);}
+  // Sun port: clouds drift slowly across the opening
+  for(var sui=0;sui<sunClouds.length;sui++){var scc=sunClouds[sui];scc.off+=scc.sp*dt;if(scc.off>.95)scc.off=-.95;scc.m.position.x=-2.2+scc.off;}
+  portShaft.material.opacity=.055+Math.sin(t*.55)*.02;
   // Hotspots: nearest labelled object within 3.6m names itself in the hint bar
   var best=null,bestD=3.6; var fwdX=-Math.sin(yaw), fwdZ=-Math.cos(yaw);
   for(var hi=0;hi<hotspots.length;hi++){var hp=new THREE.Vector3(); hotspots[hi].getWorldPosition(hp); var dx=hp.x-pos.x, dz=hp.z-pos.z; var hd=Math.hypot(dx,dz); if(hd<0.01)continue; var facing=(dx*fwdX+dz*fwdZ)/hd; if(hd<bestD&&facing>0.25){bestD=hd;best=hotspots[hi];}}
